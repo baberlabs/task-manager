@@ -32,7 +32,7 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
     steps:
