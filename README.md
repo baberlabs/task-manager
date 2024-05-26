@@ -77,12 +77,13 @@ For any inquiries, please reach out to [baberlabs](https://github.com/baberlabs)
 
 Adding new task:
 
-![Screenshot](https://github.com/baberlabs/todo_react_app/assets/125814185/c5905410-e72c-45f8-ad0a-07ff17f01cf7)
+![image](https://github.com/baberlabs/task-manager/assets/125814185/3c7f5281-2a3a-47b5-895a-af4c63c0a3b7)
 
 Opening a task menu:
 
-![Screenshot](https://github.com/baberlabs/todo_react_app/assets/125814185/28920286-2c38-4f71-a35b-6b5e0ff1d87e)
+![image](https://github.com/baberlabs/task-manager/assets/125814185/95158098-3d0f-4696-a5d5-f2eb922f1a8f)
 
 Editing a task:
 
-![Screenshot](https://github.com/baberlabs/todo_react_app/assets/125814185/456e43ee-a45a-4ca6-ac3a-f3b6aca39d2a)
+![image](https://github.com/baberlabs/task-manager/assets/125814185/8a0cd82a-4bc4-4a3f-9506-d8201942505e)
+
