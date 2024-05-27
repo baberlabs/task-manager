@@ -21,152 +21,136 @@ function App() {
     localStorage.setItem("currentItems", JSON.stringify(items));
   }, [items]);
 
-  function handleInputChange(event) {
-    setInputValue(event.target.value);
-  }
+  const handleInputChange = (event) => setInputValue(event.target.value);
 
-  function handleInputKeyUp(event) {
-    if (event.key === "Enter") {
-      if (inputValue.trim() !== "") {
-        setItems([...items, inputValue]);
-        setInputValue("");
-      }
+  const handleInputKeyUp = (event) => {
+    if (event.key === "Enter" && inputValue.trim()) {
+      addNewItem();
     }
-  }
+  };
 
-  function handleButtonAdd() {
-    if (inputValue.trim() !== "") {
-      setItems([...items, inputValue]);
-      setInputValue("");
+  const handleButtonAdd = () => {
+    if (inputValue.trim()) {
+      addNewItem();
     }
-  }
+  };
 
-  function handleMenuToggle(index) {
+  const addNewItem = () => {
+    setItems([...items, inputValue]);
+    setInputValue("");
+  };
+
+  const handleMenuToggle = (index) =>
     setActiveMenuIndex(activeMenuIndex === index ? null : index);
-  }
 
-  function handleTaskDone(index) {
+  const handleTaskDone = (index) => {
     // logic for marking task as done
-  }
+  };
 
-  function handleEdit(index) {
+  const handleEdit = (index) => {
     setEditIndex(index);
     setEditValue(items[index]);
     setActiveMenuIndex(null);
-  }
+  };
 
-  function handleSaveEdit(index) {
+  const handleSaveEdit = (index) => {
     const updatedItems = [...items];
     updatedItems[index] = editRef.current.innerText;
     setItems(updatedItems);
     setEditIndex(null);
     setEditValue("");
-  }
+  };
 
-  function handleDelete(index) {
+  const handleDelete = (index) => {
     const updatedItems = items.filter((_, i) => i !== index);
     setItems(updatedItems);
     setActiveMenuIndex(null);
-  }
+  };
+
+  const TaskItem = ({ item, index }) => (
+    <li key={index} className="flex flex-row items-center gap-4">
+      {editIndex === index ? (
+        <div className="flex w-full flex-row items-center gap-4">
+          <span
+            contentEditable
+            ref={editRef}
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-2 text-gray-950"
+            suppressContentEditableWarning={true}
+            aria-label="Editable task"
+          >
+            {editValue}
+          </span>
+          <button onClick={() => handleSaveEdit(index)} aria-label="Save task">
+            <img src={iconSave} alt="Save task" className="h-5" />
+          </button>
+          <button onClick={() => setEditIndex(null)} aria-label="Cancel edit">
+            <img src={iconExit} alt="Cancel edit" className="h-5" />
+          </button>
+        </div>
+      ) : (
+        <div className="relative flex flex-row items-center gap-4">
+          {/* Task Text */}
+          <span className="w-fit rounded-xl border border-gray-300 bg-gray-200 px-4 py-2">
+            {item}
+          </span>
+
+          <button
+            onClick={() => handleMenuToggle(index)}
+            aria-label="Open menu"
+          >
+            <img src={iconSettings} alt="Open menu" className="h-5" />
+          </button>
+
+          {activeMenuIndex === index && (
+            <div className="absolute right-0 top-10 z-10 flex flex-col gap-6 rounded-xl bg-gray-800 px-6 py-6">
+              {/* Task Done */}
+              <button
+                className="flex w-28 cursor-pointer flex-row items-center gap-3"
+                onClick={() => handleTaskDone(index)}
+                aria-label="Mark task as done"
+              >
+                <img src={iconDone} alt="Mark as done" className="h-5" />
+                <span className="text-blue-400">Done</span>
+              </button>
+              {/* Edit Task */}
+              <button
+                className="flex w-28 cursor-pointer flex-row items-center gap-3"
+                onClick={() => handleEdit(index)}
+                aria-label="Edit task"
+              >
+                <img src={iconEdit} alt="Edit task" className="h-5" />
+                <span className="text-gray-200">Edit</span>
+              </button>
+              {/* Cancel Menu */}
+              <button
+                className="flex w-28 cursor-pointer flex-row items-center gap-3"
+                onClick={() => setActiveMenuIndex(null)}
+                aria-label="Close menu"
+              >
+                <img src={iconExit2} alt="Close menu" className="h-5" />
+                <span className="text-gray-200">Cancel</span>
+              </button>
+              {/* Delete Task */}
+              <button
+                className="flex w-28 cursor-pointer flex-row items-center gap-3"
+                onClick={() => handleDelete(index)}
+                aria-label="Delete task"
+              >
+                <img src={iconDelete} alt="Delete task" className="h-5" />
+                <span className="text-red-400">Delete</span>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </li>
+  );
 
   return (
     <div className="text-sm">
       <ul className="flex min-h-screen flex-col gap-2 bg-purple-950 p-5">
         {items.map((item, index) => (
-          <li key={index} className="flex flex-row items-center gap-4">
-            {editIndex === index ? (
-              <div className="flex w-full flex-row items-center gap-4">
-                <span
-                  contentEditable
-                  ref={editRef}
-                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-2 text-gray-950"
-                  suppressContentEditableWarning={true}
-                >
-                  {editValue}
-                </span>
-                <img
-                  src={iconSave}
-                  alt="Save the edited task icon"
-                  className="h-5 cursor-pointer"
-                  onClick={() => handleSaveEdit(index)}
-                />
-                <img
-                  src={iconExit}
-                  alt="Exit the edit state icon"
-                  className="h-5 cursor-pointer"
-                  onClick={() => setEditIndex(null)}
-                />
-              </div>
-            ) : (
-              <div className="flex flex-row items-center gap-4">
-                {/* Task Text */}
-                <span className="w-fit rounded-xl border border-gray-300 bg-gray-200 px-4 py-2">
-                  {item}
-                </span>
-                <span className="relative">
-                  {/* Open Menu */}
-                  <img
-                    src={iconSettings}
-                    alt="Menu open icon"
-                    className="h-5 cursor-pointer"
-                    onClick={() => handleMenuToggle(index)}
-                  />
-                  {activeMenuIndex === index && (
-                    <div className="absolute right-0 top-10 flex flex-col gap-6 rounded-xl bg-gray-800 px-6 py-6">
-                      {/* Task Done */}
-                      <div
-                        className="flex w-28 cursor-pointer flex-row items-center gap-3"
-                        onClick={() => handleTaskDone(index)}
-                      >
-                        <img
-                          src={iconDone}
-                          alt="Task done icon"
-                          className="h-5"
-                        />
-                        <span className="text-blue-400">Done</span>
-                      </div>
-                      {/* Edit Task */}
-                      <div
-                        className="flex w-28 cursor-pointer flex-row items-center gap-3"
-                        onClick={() => handleEdit(index)}
-                      >
-                        <img
-                          src={iconEdit}
-                          alt="Edit task icon"
-                          className="h-5"
-                        />
-                        <span className="text-gray-200">Edit</span>
-                      </div>
-                      {/* Exit Menu */}
-                      <div
-                        className="flex w-28 cursor-pointer flex-row items-center gap-3"
-                        onClick={() => setActiveMenuIndex(null)}
-                      >
-                        <img
-                          src={iconExit2}
-                          alt="Exit menu icon"
-                          className="h-5"
-                        />
-                        <span className="text-gray-200">Exit</span>
-                      </div>
-                      {/* Delete Task */}
-                      <div
-                        className="flex w-28 cursor-pointer flex-row items-center gap-3"
-                        onClick={() => handleDelete(index)}
-                      >
-                        <img
-                          src={iconDelete}
-                          alt="Delete task icon"
-                          className="h-5"
-                        />
-                        <span className="text-red-400">Delete</span>
-                      </div>
-                    </div>
-                  )}
-                </span>
-              </div>
-            )}
-          </li>
+          <TaskItem key={index} item={item} index={index} />
         ))}
       </ul>
 
@@ -181,11 +165,13 @@ function App() {
             value={inputValue}
             onChange={handleInputChange}
             onKeyUp={handleInputKeyUp}
+            aria-label="New task input"
           />
           <button
             id="button-add"
             className="absolute right-1 mt-1 h-9 w-9 rounded-full bg-purple-950 text-xl font-black text-gray-200"
             onClick={handleButtonAdd}
+            aria-label="Add task"
           >
             +
           </button>
