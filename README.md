@@ -1,89 +1,121 @@
-# Task Manager
+# Task Management Application
 
-A simple and elegant task application built with React, Vite, and TailwindCSS. This app allows users to add, edit, and delete tasks efficiently.
-
-**Dated: 26 May 2024, 15:44**
-
-## Technologies Used
-
-- [Vite](https://vitejs.dev/)
-- [React](https://reactjs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-
----
-
-## Note
-
-> The "Task Done" functionality has not yet been added. I'm considering various implementations, such as crossing it out on the existing screen, deleting it, moving it to the bottom with different styles, or creating a new tab for 'Completed Tasks'.
-
----
+This React-based Task Management Application allows users to efficiently manage their tasks. Users can add new tasks, edit existing ones, mark tasks as completed or incomplete, and delete tasks. The application leverages local storage to persist tasks between sessions.
 
 ## Features
 
-1. **Add Task Items**  
-   Items can be added via an input field at the bottom of the screen. You can either press 'Enter' or click the '+' button to add the task.
+- **Add New Tasks**: Easily add new tasks to your to-do list.
+- **Edit Tasks**: Modify the details of existing tasks.
+- **Mark as Done**: Mark tasks as completed.
+- **Undo Completed Tasks**: Move tasks back to the to-do list.
+- **Delete Tasks**: Remove tasks permanently.
+- **Persistent Storage**: Tasks are saved in local storage to maintain state across browser sessions.
 
-2. **Edit Task Items**  
-   Items can be edited by clicking the 'Settings' icon next to each task and selecting 'Edit'. After making changes, press the 'Save' button to update the task.
+## Getting Started
 
-3. **Delete Task Items**  
-   Items can be deleted by clicking the 'Settings' icon next to each task and selecting 'Delete'.
+### Prerequisites
 
-## Installation
+Ensure you have the following software installed on your machine:
 
-Follow these steps to set up the project locally:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
 
-1. **Clone the repository**
+### Installation
 
-   ```sh
-   git clone https://github.com/baberlabs/task-manager.git
-   cd task-manager
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/task-management-app.git
    ```
 
-2. **Install dependencies**
-
-   ```sh
+2. **Navigate to the project directory**:
+   ```bash
+   cd task-management-app
+   ```
+3. **Install the dependencies**:
+   ```bash
    npm install
    ```
 
-3. **Start the development server**
-   ```sh
-   npm run dev
-   ```
+### Running the Application
 
-## Usage
+Start the development server:
 
-- **Add a Task**: Type your task in the input field at the bottom and press 'Enter' or click the '+' button.
-- **Edit a Task**: Click the 'Settings' icon next to the task, select 'Edit', make your changes, and click the 'Save' icon.
-- **Delete a Task**: Click the 'Settings' icon next to the task and select 'Delete'.
+```bash
+npm start
+```
+
+Open your browser and navigate to `http://localhost:3000` to access the application.
+
+## Application Structure
+
+- **src/App.jsx**: The main component containing the core logic for task management.
+- **src/assets/icons/**: Directory containing icon assets used throughout the application.
+
+## Components
+
+### `App`
+
+The `App` component is the primary component responsible for managing the application's state and rendering the user interface. It includes state hooks and handler functions for various operations such as adding, editing, completing, and deleting tasks.
+
+### `TaskItem`
+
+The `TaskItem` component renders individual tasks and their associated controls. It handles interactions such as editing, completing, undoing, and deleting tasks through a menu interface.
+
+## State Management
+
+The application uses React's `useState` and `useEffect` hooks for state management:
+
+- **`items`**: State for the to-do tasks.
+- **`completedItems`**: State for the completed tasks.
+- **`inputValue`**: State for the current value of the task input field.
+- **`activeMenuIndex`**: State for the active menu index in the to-do list.
+- **`activeCompletedMenuIndex`**: State for the active menu index in the completed list.
+- **`editIndex`**: State for the index of the task being edited.
+- **`editValue`**: State for the value of the task being edited.
+
+## Local Storage
+
+The application uses the browser's local storage to persist tasks between sessions. Tasks are stored under two keys:
+
+- **`currentItems`**: Stores the to-do tasks.
+- **`currentCompletedItems`**: Stores the completed tasks.
+
+## Accessibility
+
+The application includes several accessibility features to enhance usability:
+
+- **ARIA Labels**: Descriptive labels for buttons and editable fields to assist screen reader users.
+- **Keyboard Navigation**: All interactive elements are accessible via keyboard.
 
 ## Contributing
 
-If you wish to contribute to the project, feel free to fork the repository and submit a pull request. Please ensure your code follows the existing style and passes all tests.
+We welcome contributions to enhance the functionality and user experience of this application. To contribute:
+
+1. **Fork the repository**.
+2. **Create a new branch**:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Make your changes**.
+4. **Commit your changes**:
+
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+
+5. **Push to the branch**:
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+6. **Open a pull request**.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+## Acknowledgements
 
-## Contact
-
-For any inquiries, please reach out to [baberlabs](https://github.com/baberlabs).
-
----
-
-## Screenshots
-
-Adding new task:
-
-![image](https://github.com/baberlabs/task-manager/assets/125814185/3c7f5281-2a3a-47b5-895a-af4c63c0a3b7)
-
-Opening a task menu:
-
-![image](https://github.com/baberlabs/task-manager/assets/125814185/95158098-3d0f-4696-a5d5-f2eb922f1a8f)
-
-Editing a task:
-
-![image](https://github.com/baberlabs/task-manager/assets/125814185/8a0cd82a-4bc4-4a3f-9506-d8201942505e)
-
+Icons used in this project are sourced from reputable icon libraries.

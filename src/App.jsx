@@ -163,8 +163,8 @@ function App() {
             suppressContentEditableWarning={true}
             aria-label="Editable task"
             onKeyUp={(event) => {
+              event.preventDefault();
               if (event.key === "Enter") {
-                event.preventDefault();
                 handleSaveEdit(index, type);
               }
             }}
