@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import iconAdd from "./assets/icons/add.svg";
+
 import iconDelete from "./assets/icons/delete.svg";
 import iconDone from "./assets/icons/done.svg";
 import iconUndo from "./assets/icons/undo.svg";
@@ -7,8 +7,18 @@ import iconEdit from "./assets/icons/edit.svg";
 import iconExit from "./assets/icons/exit.svg";
 import iconExit2 from "./assets/icons/exit_2.svg";
 import iconSave from "./assets/icons/save.svg";
-import iconSettings from "./assets/icons/settings.svg";
 import iconMenu from "./assets/icons/menu.svg";
+
+const ICONS = {
+  delete: iconDelete,
+  done: iconDone,
+  undo: iconUndo,
+  edit: iconEdit,
+  close: iconExit,
+  exit: iconExit2,
+  save: iconSave,
+  menu: iconMenu,
+};
 
 function App() {
   const currentItems = JSON.parse(localStorage.getItem("currentItems")) || [];
@@ -60,13 +70,14 @@ function App() {
     setInputValue("");
   };
 
-  const handleMenuToggle = (index) =>
-    setActiveMenuIndex(activeMenuIndex === index ? null : index);
-
-  const handleCompletedMenuToggle = (index) =>
-    setActiveCompletedMenuIndex(
-      activeCompletedMenuIndex === index ? null : index,
-    );
+  const handleMenuToggle = (index, type) => {
+    if (type === "todo")
+      setActiveMenuIndex(activeMenuIndex === index ? null : index);
+    if (type === "completed")
+      setActiveCompletedMenuIndex(
+        activeCompletedMenuIndex === index ? null : index,
+      );
+  };
 
   const handleTaskDone = (item, index) => {
     const updatedItems = items.filter((item) => item[0] !== index);
@@ -97,12 +108,6 @@ function App() {
     }
     setEditValue(editItem[1]);
   };
-
-  // const handleEditKeyUp = (event) => {
-  //   if (event.key === "Enter") {
-  //     handleSaveEdit(index, type)
-  //   }
-  // }
 
   const handleSaveEdit = (index, type) => {
     let updatedItems;
@@ -170,10 +175,10 @@ function App() {
             onClick={() => handleSaveEdit(index, type)}
             aria-label="Save task"
           >
-            <img src={iconSave} alt="Save task" className="h-5" />
+            <img src={ICONS.save} alt="Save task" className="h-5" />
           </button>
           <button onClick={() => setEditIndex(null)} aria-label="Cancel edit">
-            <img src={iconExit} alt="Cancel edit" className="h-5" />
+            <img src={ICONS.close} alt="Cancel edit" className="h-5" />
           </button>
         </div>
       ) : (
@@ -185,10 +190,10 @@ function App() {
                 {item}
               </span>
               <button
-                onClick={() => menuToggleHandler(index)}
+                onClick={() => menuToggleHandler(index, type)}
                 aria-label="Open menu"
               >
-                <img src={iconMenu} alt="Open menu" className="w-6 py-2" />
+                <img src={ICONS.menu} alt="Open menu" className="w-6 py-2" />
               </button>
             </div>
           )}
@@ -198,10 +203,10 @@ function App() {
                 {item}
               </span>
               <button
-                onClick={() => menuToggleHandler(index)}
+                onClick={() => menuToggleHandler(index, type)}
                 aria-label="Open menu"
               >
-                <img src={iconMenu} alt="Open menu" className="w-6 py-2" />
+                <img src={ICONS.menu} alt="Open menu" className="w-6 py-2" />
               </button>
             </div>
           )}
@@ -215,7 +220,7 @@ function App() {
                   onClick={() => handleTaskDone(item, index)}
                   aria-label="Mark task as done"
                 >
-                  <img src={iconDone} alt="Mark as done" className="h-5" />
+                  <img src={ICONS.done} alt="Mark as done" className="h-5" />
                   <span className="text-blue-400">Done</span>
                 </button>
               )}
@@ -226,7 +231,7 @@ function App() {
                   aria-label="Mark task as incomplete"
                 >
                   <img
-                    src={iconUndo}
+                    src={ICONS.undo}
                     alt="Mark as incomplete"
                     className="h-5"
                   />
@@ -239,7 +244,7 @@ function App() {
                 onClick={() => handleEdit(index, type)}
                 aria-label="Edit task"
               >
-                <img src={iconEdit} alt="Edit task" className="h-5" />
+                <img src={ICONS.edit} alt="Edit task" className="h-5" />
                 <span className="text-gray-200">Edit</span>
               </button>
               {/* Cancel Menu */}
@@ -248,7 +253,7 @@ function App() {
                 onClick={() => menuToggleHandler(null)}
                 aria-label="Close menu"
               >
-                <img src={iconExit2} alt="Close menu" className="h-5" />
+                <img src={ICONS.exit} alt="Close menu" className="h-5" />
                 <span className="text-gray-200">Cancel</span>
               </button>
               {/* Delete Task */}
@@ -257,7 +262,7 @@ function App() {
                 onClick={() => handleDelete(index, type)}
                 aria-label="Delete task"
               >
-                <img src={iconDelete} alt="Delete task" className="h-5" />
+                <img src={ICONS.delete} alt="Delete task" className="h-5" />
                 <span className="text-red-400">Delete</span>
               </button>
             </div>
@@ -297,7 +302,7 @@ function App() {
               key={itemArray[0]}
               item={itemArray[1]}
               index={itemArray[0]}
-              menuToggleHandler={handleCompletedMenuToggle}
+              menuToggleHandler={handleMenuToggle}
               activeMenuIndex={activeCompletedMenuIndex}
               handleTaskUndone={handleTaskUndone}
               handleEdit={handleEdit}
