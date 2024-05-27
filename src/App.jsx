@@ -8,6 +8,7 @@ import iconExit from "./assets/icons/exit.svg";
 import iconExit2 from "./assets/icons/exit_2.svg";
 import iconSave from "./assets/icons/save.svg";
 import iconSettings from "./assets/icons/settings.svg";
+import iconMenu from "./assets/icons/menu.svg";
 
 function App() {
   const currentItems = JSON.parse(localStorage.getItem("currentItems")) || [];
@@ -187,7 +188,7 @@ function App() {
                 onClick={() => menuToggleHandler(index)}
                 aria-label="Open menu"
               >
-                <img src={iconSettings} alt="Open menu" className="h-5" />
+                <img src={iconMenu} alt="Open menu" className="w-6 py-2" />
               </button>
             </div>
           )}
@@ -200,7 +201,7 @@ function App() {
                 onClick={() => menuToggleHandler(index)}
                 aria-label="Open menu"
               >
-                <img src={iconSettings} alt="Open menu" className="h-5" />
+                <img src={iconMenu} alt="Open menu" className="w-6 py-2" />
               </button>
             </div>
           )}
