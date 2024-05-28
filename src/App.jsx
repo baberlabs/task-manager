@@ -1,24 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
-import iconDelete from "./assets/icons/delete.svg";
-import iconDone from "./assets/icons/done.svg";
-import iconUndo from "./assets/icons/undo.svg";
-import iconEdit from "./assets/icons/edit.svg";
-import iconExit from "./assets/icons/exit.svg";
-import iconExit2 from "./assets/icons/exit_2.svg";
-import iconSave from "./assets/icons/save.svg";
-import iconMenu from "./assets/icons/menu.svg";
-
-const ICONS = {
-  delete: iconDelete,
-  done: iconDone,
-  undo: iconUndo,
-  edit: iconEdit,
-  close: iconExit,
-  exit: iconExit2,
-  save: iconSave,
-  menu: iconMenu,
-};
+import { ICONS } from "./components/icons";
 
 function App() {
   const currentItems = JSON.parse(localStorage.getItem("currentItems")) || [];
